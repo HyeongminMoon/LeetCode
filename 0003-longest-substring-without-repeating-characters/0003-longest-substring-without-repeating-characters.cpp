@@ -5,8 +5,7 @@ public:
         int max_len = 0;
         
         for(char _letter: s){
-            cur_string = GetLastSplit(cur_string, _letter);
-            cur_string += _letter;
+            cur_string = GetLastSplit(cur_string, _letter) + _letter;
             
             if (cur_string.length() > max_len){
                 max_len = cur_string.length();
