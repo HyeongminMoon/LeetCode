@@ -1,19 +1,20 @@
 class Solution:
-    def longestPalindrome(self, s: str) -> str:
-        dp = [[False] * len(s)  for _ in range(len(s))]
-        
-        answer = ''
+    def longestPalindrome(self, s):
+        res = ""
         for i in range(len(s)):
-            dp[i][i] = True
-            answer = s[i]
-            
-        maxLen = 1
-        for start in range(len(s)-1, -1, -1):
-            for end in range(start+1, len(s)):             
-                if s[start] == s[end]:
-                    if end - start == 1 or dp[start+1][end-1]:
-                        dp[start][end] = True
-                        if len(answer) < end - start + 1:
-                            answer = s[start: end+ 1]
-        
-        return answer
+            # odd case, like "aba"
+            tmp = self.helper(s, i, i)
+            if len(tmp) > len(res):
+                res = tmp
+            # even case, like "abba"
+            tmp = self.helper(s, i, i+1)
+            if len(tmp) > len(res):
+                res = tmp
+        return res
+
+    # get the longest palindrome, l, r are the middle indexes   
+    # from inner to outer
+    def helper(self, s, l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1; r += 1
+        return s[l+1:r]
